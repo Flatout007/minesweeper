@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Root from './components/root'
+import Root from './components/root';
+import Tile from "./components/tile";
 
 document.addEventListener("DOMContentLoaded", (e) => {
      

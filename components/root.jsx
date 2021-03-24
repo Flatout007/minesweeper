@@ -1,8 +1,11 @@
 import React from 'react';
+import Tile from "./tile.jsx";
+import Game from "./game.jsx";
+import Board from "./board"
 
 const Root = (props) => {
    return(
-       <div>hello</div>
+       <div><Game />hello</div>
    )
 }
 
