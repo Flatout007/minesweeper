@@ -57,14 +57,14 @@ var Board = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this = this;
 
-      console.log(this.props, "THis one");
+      console.log(this.props.board.grid);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, this.props.board.grid.map(function (sub, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           key: i
         }, sub.map(function (el, j) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_tile__WEBPACK_IMPORTED_MODULE_2__.default, {
             key: j,
-            index: el,
+            ele: el,
             updateGame: _this.props.updateGame
           });
         }));
@@ -231,15 +231,38 @@ var Tile = /*#__PURE__*/function (_React$Component) {
   var _super = _createSuper(Tile);
 
   function Tile(props) {
+    var _this;
+
     _classCallCheck(this, Tile);
 
-    return _super.call(this, props);
+    _this = _super.call(this, props);
+    _this.state = {};
+    return _this;
   }
 
   _createClass(Tile, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "t");
+      var _this2 = this;
+
+      var result = function result() {
+        if (_this2.props.ele.explored) {
+          if (_this2.props.ele.bombed) {
+            return "B";
+          } else return "E";
+        } else {
+          if (_this2.props.ele.flagged) {
+            return "F";
+          } else return "T";
+        } // else if(this.props.ele.flagged) {
+        //   return "F";
+        // } else if (this.props.ele.explored) {
+        //   return "E";
+        // } else return "T";
+
+      };
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, result());
     }
   }]);
 

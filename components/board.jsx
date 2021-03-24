@@ -9,7 +9,7 @@ class Board extends React.Component {
   };
 
   render() {
-    console.log(this.props, "THis one")
+    console.log(this.props.board.grid)
     return (
     <div>
       {this.props.board.grid.map( (sub, i) => {
@@ -17,7 +17,7 @@ class Board extends React.Component {
             {sub.map( (el, j) => {
               return (<Tile
                 key={j} 
-                index={el}
+                ele={el}
                 updateGame={this.props.updateGame}
               />)
             })}
