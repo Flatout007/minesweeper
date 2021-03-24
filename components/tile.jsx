@@ -18,7 +18,10 @@ class Tile extends React.Component {
       this.setState({ board: this.state.board});
     } else {
       this.props.ele.explore();
-      this.setState({ board: this.state.board });
+      e.target.classList.add("tile-clicked");
+      this.setState({ 
+        board: this.state.board
+       });
     }
   }
 

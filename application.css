@@ -1,3 +1,27 @@
 .tile {
+  height: 40px;
+  width: 40px;
+  background-color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: solid black; */
   
+  border-style: outset;
+}
+
+.tile-clicked {
+  border-style: inset;
+}
+
+.board {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.row {
+    display: flex;
+    
+    flex-direction: row;
 }

@@ -257,6 +257,7 @@ var Tile = /*#__PURE__*/function (_React$Component) {
         });
       } else {
         this.props.ele.explore();
+        e.target.classList.add("tile-clicked");
         this.setState({
           board: this.state.board
         });
