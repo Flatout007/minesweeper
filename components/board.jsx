@@ -9,11 +9,11 @@ class Board extends React.Component {
   };
 
   render() {
-    console.log(this.props.board.grid)
+    // console.log(this.props.board.grid)
     return (
-    <div>
+    <div className="board">
       {this.props.board.grid.map( (sub, i) => {
-          return (<div key={i}>
+          return (<div className="row" key={i}>
             {sub.map( (el, j) => {
               return (<Tile
                 key={j} 

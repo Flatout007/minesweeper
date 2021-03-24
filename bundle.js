@@ -57,9 +57,12 @@ var Board = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this = this;
 
-      console.log(this.props.board.grid);
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, this.props.board.grid.map(function (sub, i) {
+      // console.log(this.props.board.grid)
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "board"
+      }, this.props.board.grid.map(function (sub, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          className: "row",
           key: i
         }, sub.map(function (el, j) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_tile__WEBPACK_IMPORTED_MODULE_2__.default, {
@@ -236,33 +239,61 @@ var Tile = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, Tile);
 
     _this = _super.call(this, props);
-    _this.state = {};
+    _this.state = {
+      board: _this.props.board
+    };
+    _this.flagBombs = _this.flagBombs.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(Tile, [{
+    key: "flagBombs",
+    value: function flagBombs(e) {
+      if (e.altKey) {
+        console.log("BOMBFLAGGED");
+        this.props.ele.toggleFlag();
+        this.setState({
+          board: this.state.board
+        });
+      } else {
+        this.props.ele.explore();
+        this.setState({
+          board: this.state.board
+        });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
 
+      // console.log(this.props)
       var result = function result() {
-        if (_this2.props.ele.explored) {
-          if (_this2.props.ele.bombed) {
-            return "B";
-          } else return "E";
-        } else {
-          if (_this2.props.ele.flagged) {
-            return "F";
-          } else return "T";
-        } // else if(this.props.ele.flagged) {
+        if (_this2.props.ele.explored && _this2.props.ele.adjacentBombCount() >= 1) {
+          return _this2.props.ele.adjacentBombCount().toString();
+        } else if (_this2.props.ele.flagged) {
+          return "F";
+        } else return "T"; // if(this.props.ele.bombed) {
+        //     return "This";
+        //   } else if(!this.props.ele.bombed) {
+        //     return "E";
+        //   }
+        //   if(this.props.ele.flagged) {
+        //     return "F";
+        //   } else return "T";
+        // else if(this.props.ele.flagged) {
         //   return "F";
         // } else if (this.props.ele.explored) {
         //   return "E";
         // } else return "T";
+        // this.props.ele.explore
 
       };
 
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, result());
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "tile",
+        onClick: this.flagBombs
+      }, result());
     }
   }]);
 
