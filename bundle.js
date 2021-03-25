@@ -96,6 +96,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _minesweeper_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../minesweeper.js */ "./minesweeper.js");
 /* harmony import */ var _board__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./board */ "./components/board.jsx");
+/* harmony import */ var _popup__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./popup */ "./components/popup.jsx");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -122,6 +123,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var Game = /*#__PURE__*/function (_React$Component) {
   _inherits(Game, _React$Component);
 
@@ -133,7 +135,7 @@ var Game = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, Game);
 
     _this = _super.call(this, props);
-    var board = new _minesweeper_js__WEBPACK_IMPORTED_MODULE_1__.Board(5, 5); // this.board = Minesweeper.Board;
+    var board = new _minesweeper_js__WEBPACK_IMPORTED_MODULE_1__.Board(2, 1); // this.board = Minesweeper.Board;
 
     _this.state = {
       board: board
@@ -144,12 +146,32 @@ var Game = /*#__PURE__*/function (_React$Component) {
 
   _createClass(Game, [{
     key: "updateGame",
-    value: function updateGame() {}
+    value: function updateGame() {
+      this.setState({
+        board: this.state.board
+      });
+    }
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       // console.log(this.state.board)
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_board__WEBPACK_IMPORTED_MODULE_2__.default, {
+      var wonOrLost = function wonOrLost() {
+        if (_this2.state.board.lost()) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_popup__WEBPACK_IMPORTED_MODULE_3__.default, {
+            lost: "true",
+            won: "false"
+          });
+        } else if (_this2.state.board.won()) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_popup__WEBPACK_IMPORTED_MODULE_3__.default, {
+            lost: "false",
+            won: "true"
+          });
+        }
+      };
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, wonOrLost(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_board__WEBPACK_IMPORTED_MODULE_2__.default, {
         board: this.state.board,
         updateGame: this.updateGame
       }));
@@ -161,6 +183,32 @@ var Game = /*#__PURE__*/function (_React$Component) {
 
 ;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Game);
+
+/***/ }),
+
+/***/ "./components/popup.jsx":
+/*!******************************!*\
+  !*** ./components/popup.jsx ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Popup": () => (/* binding */ Popup)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var Popup = function Popup(props) {
+  if (props.won) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
+      className: "Popup"
+    }, "You have won!");
+  } else {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
+      className: "Popup"
+    }, "You lost!");
+  }
+};
 
 /***/ }),
 
@@ -242,26 +290,23 @@ var Tile = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       board: _this.props.board
     };
-    _this.flagBombs = _this.flagBombs.bind(_assertThisInitialized(_this));
+    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(Tile, [{
-    key: "flagBombs",
-    value: function flagBombs(e) {
+    key: "handleClick",
+    value: function handleClick(e) {
       if (e.altKey) {
         console.log("BOMBFLAGGED");
         this.props.ele.toggleFlag();
-        this.setState({
-          board: this.state.board
-        });
       } else {
         this.props.ele.explore();
         e.target.classList.add("tile-clicked");
-        this.setState({
-          board: this.state.board
-        });
       }
+
+      ;
+      this.props.updateGame();
     }
   }, {
     key: "render",
@@ -274,26 +319,12 @@ var Tile = /*#__PURE__*/function (_React$Component) {
           return _this2.props.ele.adjacentBombCount().toString();
         } else if (_this2.props.ele.flagged) {
           return "F";
-        } else return "T"; // if(this.props.ele.bombed) {
-        //     return "This";
-        //   } else if(!this.props.ele.bombed) {
-        //     return "E";
-        //   }
-        //   if(this.props.ele.flagged) {
-        //     return "F";
-        //   } else return "T";
-        // else if(this.props.ele.flagged) {
-        //   return "F";
-        // } else if (this.props.ele.explored) {
-        //   return "E";
-        // } else return "T";
-        // this.props.ele.explore
-
+        } else return "T";
       };
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "tile",
-        onClick: this.flagBombs
+        onClick: this.handleClick
       }, result());
     }
   }]);

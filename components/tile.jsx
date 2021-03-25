@@ -8,21 +8,18 @@ class Tile extends React.Component {
       board: this.props.board
     }
 
-    this.flagBombs = this.flagBombs.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
   
-  flagBombs(e) {
+  handleClick(e) {
     if (e.altKey) {
       console.log("BOMBFLAGGED")
       this.props.ele.toggleFlag();
-      this.setState({ board: this.state.board});
     } else {
       this.props.ele.explore();
       e.target.classList.add("tile-clicked");
-      this.setState({ 
-        board: this.state.board
-       });
-    }
+    };
+    this.props.updateGame();
   }
 
   render() {
@@ -33,24 +30,10 @@ class Tile extends React.Component {
       } else if(this.props.ele.flagged) {
         return "F";
       } else return "T";
-      // if(this.props.ele.bombed) {
-      //     return "This";
-      //   } else if(!this.props.ele.bombed) {
-      //     return "E";
-      //   }
-      //   if(this.props.ele.flagged) {
-      //     return "F";
-      //   } else return "T";
-      // else if(this.props.ele.flagged) {
-      //   return "F";
-      // } else if (this.props.ele.explored) {
-      //   return "E";
-      // } else return "T";
-      // this.props.ele.explore
     }
 
     return(
-      <div className="tile" onClick={this.flagBombs}>{result()}</div>
+      <div className="tile" onClick={this.handleClick}>{result()}</div>
     ) 
   };
 };
